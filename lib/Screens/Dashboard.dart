@@ -27,9 +27,12 @@ import 'package:progressclubsurat_new/pages/Home.dart';
 import 'package:progressclubsurat_new/pages/NotificationPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:progressclubsurat_new/Screens/DailyReport.dart';
 import 'dart:developer';
 
 import 'AnimatedBottomBar.dart';
+import 'ChainReport.dart';
+import 'Report.dart';
 
 bool adminSwitchShow = true;
 bool adminOptionsPressed = false;
@@ -2046,193 +2049,28 @@ class _MyDialogState extends State<MyDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-      //this right here
-      child: Container(
-        padding: EdgeInsets.only(top: 15, left: 15, right: 15, bottom: 20),
-        //width: MediaQuery.of(context).size.width,
-        //height: MediaQuery.of(context).size.height,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          //mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  "Your Daily Progress",
-                  style: TextStyle(
-                      color: cnst.appPrimaryMaterialColor,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600),
-                ),
-              ],
-            ),
-            TextFormField(
-              controller: edtSale,
-              scrollPadding: EdgeInsets.all(0),
-              decoration: InputDecoration(
-                  labelText: "Today Sales",
-                  labelStyle: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600),
-                  hintText: "Today Sales"),
-              enabled: true,
-              keyboardType: TextInputType.number,
-              style: TextStyle(color: Colors.black, fontSize: 15),
-            ),
-            TextFormField(
-              controller: edtEffectiness,
-              scrollPadding: EdgeInsets.all(0),
-              decoration: InputDecoration(
-                  labelText: "Effectiveness %(0-100)",
-                  labelStyle: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600),
-                  hintText: "Effectiveness %(0-100)"),
-              onChanged: (data) {
-                var val = int.parse(edtEffectiness.text);
-                if (val > 101) {
-                  edtEffectiness.text = "100";
-                  Fluttertoast.showToast(
-                      msg: "Enter Effectiveness Between 0 To 100.",
-                      backgroundColor: Colors.red,
-                      gravity: ToastGravity.CENTER,
-                      toastLength: Toast.LENGTH_SHORT);
-                }
-              },
-              enabled: true,
-              keyboardType: TextInputType.number,
-              maxLength: 3,
-              style: TextStyle(color: Colors.black, fontSize: 15),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 10),
-              child: Text(
-                'Daily task sheet:',
-                textAlign: TextAlign.start,
-                style: TextStyle(fontSize: 17),
-              ),
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    new Radio(
-                      value: 1,
-                      groupValue: selectedRadio,
-                      onChanged: (value) {
-                        setSelectRadio(value);
-                      },
-                      activeColor: cnst.appPrimaryMaterialColor,
-                    ),
-                    new Text(
-                      'Yes',
-                      style: new TextStyle(
-                          fontSize: 16.0, fontWeight: FontWeight.w600),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: <Widget>[
-                    new Radio(
-                        value: 2,
-                        groupValue: selectedRadio,
-                        onChanged: (value) {
-                          setSelectRadio(value);
-                        },
-                        activeColor: cnst.appPrimaryMaterialColor),
-                    new Text(
-                      'No',
-                      style: new TextStyle(
-                          fontSize: 16.0, fontWeight: FontWeight.w600),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Container(
-                        width: MediaQuery.of(context).size.width / 3.3,
-                        margin: EdgeInsets.only(top: 10),
-                        height: 40,
-                        decoration: BoxDecoration(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
-                        child: MaterialButton(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(10.0)),
-                          color: cnst.appPrimaryMaterialColor,
-                          minWidth: MediaQuery.of(context).size.width - 10,
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text(
-                            "Cancel",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14.0,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Container(
-                        width: MediaQuery.of(context).size.width / 3.3,
-                        margin: EdgeInsets.only(top: 10),
-                        height: 40,
-                        decoration: BoxDecoration(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
-                        child: MaterialButton(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(10.0)),
-                          color: cnst.appPrimaryMaterialColor,
-                          minWidth: MediaQuery.of(context).size.width - 10,
-                          onPressed: () {
-                            //Navigator.pop(context);
-                            if (edtSale.text != "" && edtSale.text != null) {
-                              if (edtEffectiness.text != "" &&
-                                  edtEffectiness.text != null) {
-                                sendDailyProgress();
-                              } else {
-                                showMsg("Enter Effectiveness");
-                              }
-                            } else {
-                              showMsg("Enter Today Sales");
-                            }
-                          },
-                          child: Text(
-                            "Submit",
-                            textAlign: TextAlign.center,
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 14.0),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        appBar: AppBar(
+          bottom: TabBar(
+            tabs: [
+              Tab(text: "Daily Report"),
+              Tab(text: "Report",),
+              Tab(text: "Chain Report",),
+            ],
+          ),
+        ),
+        body: TabBarView(
+          children: [
+            DailyReport(),
+            Report(),
+            ChainReport(),
           ],
         ),
       ),
     );
-    ;
   }
 }
+
+
