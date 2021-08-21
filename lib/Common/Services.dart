@@ -25,7 +25,7 @@ class Services {
       if (response.statusCode == 200) {
         final jsonResponse = json.decode(response.body);
         SaveDataClass1 saveDataClass =
-            new SaveDataClass1.fromJson(jsonResponse);
+        new SaveDataClass1.fromJson(jsonResponse);
         return saveDataClass;
       } else {
         throw Exception(MESSAGES.INTERNET_ERROR);
@@ -73,7 +73,7 @@ class Services {
         SaveDataClass1 data;
         final jsonResponse = json.decode(response.body);
         SaveDataClass1 saveDataClass =
-            new SaveDataClass1.fromJson(jsonResponse);
+        new SaveDataClass1.fromJson(jsonResponse);
         print("digitalcardsignup data: ");
         print(jsonResponse);
         return saveDataClass;
@@ -97,7 +97,7 @@ class Services {
         SaveDataClass1 data;
         final jsonResponse = json.decode(response.body);
         SaveDataClass1 saveDataClass =
-            new SaveDataClass1.fromJson(jsonResponse);
+        new SaveDataClass1.fromJson(jsonResponse);
         print("ScanEventMemberEntry data: ");
         print(jsonResponse);
         return saveDataClass;
@@ -119,7 +119,7 @@ class Services {
         SaveDataClass1 data;
         final jsonResponse = json.decode(response.body);
         SaveDataClass1 saveDataClass =
-            new SaveDataClass1.fromJson(jsonResponse);
+        new SaveDataClass1.fromJson(jsonResponse);
         print("PCSignUp data");
         print(saveDataClass);
         return saveDataClass;
@@ -144,7 +144,7 @@ class Services {
 
         final jsonResponse = json.decode(response.body);
         MemberDataClass1 memberDataClass =
-            new MemberDataClass1.fromJson(jsonResponse);
+        new MemberDataClass1.fromJson(jsonResponse);
 
         if (memberDataClass.ERROR_STATUS == false)
           list = memberDataClass.Data;
@@ -280,7 +280,7 @@ class Services {
         print("MemberLogin123 Response: " + response.body);
         final jsonResponse = json.decode(response.body);
         MemberDataClass1 memberDataClass =
-            new MemberDataClass1.fromJson(jsonResponse);
+        new MemberDataClass1.fromJson(jsonResponse);
         if (memberDataClass.ERROR_STATUS == false) {
           list = memberDataClass.Data;
         } else
@@ -530,7 +530,7 @@ class Services {
         if (responseData["IsSuccess"] == true) {
           final jsonResponse = response.data;
           MemberDataClass memberdataclass =
-              new MemberDataClass.fromJson(jsonResponse);
+          new MemberDataClass.fromJson(jsonResponse);
 
           list = memberdataclass.Data;
 
@@ -657,7 +657,7 @@ class Services {
         final jsonResponse = json.decode(response.data);
         print("UpdateBrochure response =" + jsonResponse.toString());
         SaveDataClass1 saveDataClass =
-            new SaveDataClass1.fromJson(jsonResponse);
+        new SaveDataClass1.fromJson(jsonResponse);
         print("saveDataClass");
         print(saveDataClass);
         return saveDataClass;
@@ -757,28 +757,22 @@ class Services {
 
   /*static Future<SaveDataClass> getAssigment() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-
     String memberId = prefs.getString(Session.MemberId);
     String chapterId = prefs.getString(Session.ChapterId);
-
     String url = API_URL +
         'GetMeetingData?ChapterId=$chapterId&MemberId=$memberId';
     print("CodeVerification URL: " + url);
     try {
       Response response = await dio.get(url);
-
       if (response.statusCode == 200) {
         SaveDataClass saveData =
         new SaveDataClass(Message: 'No Data', IsSuccess: false,IsRecord: false, Data: null);
-
         print("CodeVerification Response: " + response.data.toString());
         var memberDataClass = response.data;
-
         saveData.Message = memberDataClass["Message"];
         saveData.IsSuccess = memberDataClass["IsSuccess"];
         saveData.IsRecord = memberDataClass["IsRecord"];
         saveData.Data = memberDataClass["Data"].toString();
-
         return saveData;
       } else {
         throw Exception(MESSAGES.INTERNET_ERROR);
@@ -1168,15 +1162,12 @@ class Services {
       if (response.statusCode == 200) {
         SaveDataClass saveData =
         new SaveDataClass(Message: 'No Data', IsSuccess: false, Data: '0');
-
         print("SaveOffer Response: " + response.data.toString());
         var memberDataClass = response.data;
-
         saveData.Message = memberDataClass["Message"];
         saveData.IsSuccess = memberDataClass["IsSuccess"];
         saveData.IsRecord = memberDataClass["IsRecord"];
         saveData.Data = memberDataClass["Data"].toString();
-
         return saveData;
       } else {
         print("Error Kap1");
@@ -1198,7 +1189,7 @@ class Services {
       final response = await dio.post(url, data: body);
       if (response.statusCode == 200) {
         SaveDataClass saveData =
-            new SaveDataClass(Message: 'No Data', IsSuccess: false, Data: '0');
+        new SaveDataClass(Message: 'No Data', IsSuccess: false, Data: '0');
 
         xml2json.parse(response.data.toString());
         var jsonData = xml2json.toParker();
@@ -1604,12 +1595,9 @@ class Services {
       if (response.statusCode == 200) {
         List<ProfessionClass> list = [];
         print("MemberLogin Response: " + response.data.toString());
-
         //final jsonResponse = json.decode(response.data);
-
         ProfessionDataClass memberDataClass =
         new ProfessionDataClass.fromJson(response.data);
-
         if (memberDataClass.IsSuccess == true && memberDataClass.Data.length>0)
           list = memberDataClass.Data;
         else
@@ -1635,7 +1623,7 @@ class Services {
 
         final jsonResponse = json.decode(response.body);
         ProfessionDataClass purposeClassData =
-            new ProfessionDataClass.fromJson(jsonResponse);
+        new ProfessionDataClass.fromJson(jsonResponse);
 
         if (purposeClassData.IsRecord == true)
           list = purposeClassData.Data;
@@ -1756,7 +1744,7 @@ class Services {
 
         final jsonResponse = json.decode(response.body);
         ChapterDataClass purposeClassData =
-            new ChapterDataClass.fromJson(jsonResponse);
+        new ChapterDataClass.fromJson(jsonResponse);
 
         if (purposeClassData.IsRecord == true)
           list = purposeClassData.Data;
@@ -1892,18 +1880,18 @@ class Services {
         print("InsertGeneralGuest URL: " + response.data.toString());
         // var responseData = response.data;
         SaveDataClass saveData =
-            new SaveDataClass(Message: 'No Data', IsSuccess: false, Data: '0');
+        new SaveDataClass(Message: 'No Data', IsSuccess: false, Data: '0');
         var responseData = jsonDecode(response.data);
         print("InsertGeneralGuest Response: " + responseData.toString());
         saveData.Message = responseData["MESSAGE"].toString();
         saveData.IsSuccess =
-            responseData["IsSuccess"].toString().toLowerCase() == "true"
-                ? true
-                : false;
+        responseData["IsSuccess"].toString().toLowerCase() == "true"
+            ? true
+            : false;
         saveData.IsRecord =
-            responseData["IsRecord"].toString().toLowerCase() == "true"
-                ? true
-                : false;
+        responseData["IsRecord"].toString().toLowerCase() == "true"
+            ? true
+            : false;
 
         return saveData;
         // if (responseData["IsSuccess"] == true &&
@@ -1969,18 +1957,18 @@ class Services {
         print("InsertGeneralGuest URL: " + response.data.toString());
         // var responseData = response.data;
         SaveDataClass saveData =
-            new SaveDataClass(Message: 'No Data', IsSuccess: false, Data: '0');
+        new SaveDataClass(Message: 'No Data', IsSuccess: false, Data: '0');
         var responseData = jsonDecode(response.data);
         print("InsertGeneralGuest Response: " + responseData.toString());
         saveData.Message = responseData["MESSAGE"].toString();
         saveData.IsSuccess =
-            responseData["IsSuccess"].toString().toLowerCase() == "true"
-                ? true
-                : false;
+        responseData["IsSuccess"].toString().toLowerCase() == "true"
+            ? true
+            : false;
         saveData.IsRecord =
-            responseData["IsRecord"].toString().toLowerCase() == "true"
-                ? true
-                : false;
+        responseData["IsRecord"].toString().toLowerCase() == "true"
+            ? true
+            : false;
 
         return saveData;
         // if (responseData["IsSuccess"] == true &&
@@ -2384,12 +2372,12 @@ class Services {
     }
   }
 
-  static Future<SaveDataClass> sendRequestBooking(body) async {
-    print(body.toString());
-    String url = API_URL + 'NewOfficeBooking';
+  static Future<SaveDataClass> sendRequestBooking(String mid,String Ft,String Tt,String Pur,String Date) async {
+   // print(body.toString());
+    String url = API_URL + 'NewOfficeBooking?Id=0&MemberId=$mid&FromTime=$Ft&ToTime=$Tt,&Purpose=$Pur,&Date=$Date';
     print("NewOfficeBooking url : " + url);
     try {
-      final response = await dio.post(url, data: body);
+      final response = await dio.post(url);
       if (response.statusCode == 200) {
         SaveDataClass saveData = new SaveDataClass(
             Message: 'No Data', IsSuccess: false, IsRecord: false, Data: null);
@@ -2456,9 +2444,9 @@ class Services {
 
         saveData.Message = responseData["Message"].toString();
         saveData.IsSuccess =
-            responseData["IsSuccess"].toString().toLowerCase() == "true"
-                ? true
-                : false;
+        responseData["IsSuccess"].toString().toLowerCase() == "true"
+            ? true
+            : false;
         saveData.Data = responseData["Data"].toString();
 
         return saveData;
@@ -2537,7 +2525,7 @@ class Services {
       final response = await dio.post(url, data: body);
       if (response.statusCode == 200) {
         SaveDataClass saveData =
-            new SaveDataClass(Message: 'No Data', IsSuccess: false, Data: '0');
+        new SaveDataClass(Message: 'No Data', IsSuccess: false, Data: '0');
 
         xml2json.parse(response.data.toString());
         var jsonData = xml2json.toParker();
@@ -2594,14 +2582,14 @@ class Services {
       final response = await dio.post(url, data: body);
       if (response.statusCode == 200) {
         SaveDataClass saveData =
-            new SaveDataClass(Message: 'No Data', IsSuccess: false, Data: '0');
+        new SaveDataClass(Message: 'No Data', IsSuccess: false, Data: '0');
         var responseData = response.data;
 
         print("EditAsk Response: " + responseData.toString());
 
         saveData.Message = responseData["Message"].toString();
         saveData.IsSuccess =
-            responseData["IsSuccess"].toString() == "true" ? true : false;
+        responseData["IsSuccess"].toString() == "true" ? true : false;
         saveData.Data = responseData["Data"].toString();
 
         return saveData;
@@ -2619,19 +2607,16 @@ class Services {
     print(body.toString());
     String url = cnst.API_URL1 + 'DeleteAsk';
     print("DeleteAsk : " + url);
-
     try {
       final response = await dio.post(url, data: body);
       if (response.statusCode == 200) {
         SaveDataClass saveData =
         new SaveDataClass(Message: 'No Data', IsSuccess: false, Data: '0');
-
         print("DeleteAsk Response: " +
            ["ResultData"].toString());
         saveData.Message = ["Message"].toString();
         saveData.IsSuccess = ["IsSuccess"] == "true";
         saveData.Data = ["Data"].toString();
-
         return saveData;
       } else {
         print("Server Error");
@@ -2650,7 +2635,7 @@ class Services {
       final response = await dio.post(url, data: body);
       if (response.statusCode == 200) {
         SaveDataClass saveData =
-            new SaveDataClass(Message: 'No Data', IsSuccess: false, Data: '0');
+        new SaveDataClass(Message: 'No Data', IsSuccess: false, Data: '0');
 
         var responseData = response.data;
 
@@ -2659,9 +2644,9 @@ class Services {
         saveData.Message = responseData["Message"].toString();
         print("msg: ${saveData.Message}");
         saveData.IsSuccess =
-            responseData["IsSuccess"].toString().toLowerCase() == "true"
-                ? true
-                : false;
+        responseData["IsSuccess"].toString().toLowerCase() == "true"
+            ? true
+            : false;
         saveData.Data = responseData["Data"].toString();
 
         return saveData;
@@ -2682,7 +2667,7 @@ class Services {
       final response = await dio.post(url, data: body);
       if (response.statusCode == 200) {
         SaveDataClass saveData =
-            new SaveDataClass(Message: 'No Data', IsSuccess: false, Data: '0');
+        new SaveDataClass(Message: 'No Data', IsSuccess: false, Data: '0');
 
         var responseData = response.data;
 
@@ -2691,9 +2676,9 @@ class Services {
         saveData.Message = responseData["Message"].toString();
         print("msg: ${saveData.Message}");
         saveData.IsSuccess =
-            responseData["IsSuccess"].toString().toLowerCase() == "true"
-                ? true
-                : false;
+        responseData["IsSuccess"].toString().toLowerCase() == "true"
+            ? true
+            : false;
         saveData.Data = responseData["Data"].toString();
 
         return saveData;
@@ -2723,19 +2708,19 @@ class Services {
       Response response = await dio.get(url);
       if (response.statusCode == 200) {
         SaveDataClass saveData =
-            new SaveDataClass(Message: 'No Data', IsSuccess: false, Data: '0');
+        new SaveDataClass(Message: 'No Data', IsSuccess: false, Data: '0');
 
         var responseData = jsonDecode(response.data);
         print("SaveIssueBook Response: " + responseData.toString());
         saveData.Message = responseData["MESSAGE"].toString();
         saveData.IsSuccess =
-            responseData["IsSuccess"].toString().toLowerCase() == "true"
-                ? true
-                : false;
+        responseData["IsSuccess"].toString().toLowerCase() == "true"
+            ? true
+            : false;
         saveData.IsRecord =
-            responseData["IsRecord"].toString().toLowerCase() == "true"
-                ? true
-                : false;
+        responseData["IsRecord"].toString().toLowerCase() == "true"
+            ? true
+            : false;
 
         return saveData;
       } else {
@@ -2761,19 +2746,19 @@ class Services {
       Response response = await dio.get(url);
       if (response.statusCode == 200) {
         SaveDataClass saveData =
-            new SaveDataClass(Message: 'No Data', IsSuccess: false, Data: '0');
+        new SaveDataClass(Message: 'No Data', IsSuccess: false, Data: '0');
 
         var responseData = jsonDecode(response.data);
         print("SaveBookReview Response: " + responseData.toString());
         saveData.Message = responseData["MESSAGE"].toString();
         saveData.IsSuccess =
-            responseData["IsSuccess"].toString().toLowerCase() == "true"
-                ? true
-                : false;
+        responseData["IsSuccess"].toString().toLowerCase() == "true"
+            ? true
+            : false;
         saveData.IsRecord =
-            responseData["IsRecord"].toString().toLowerCase() == "true"
-                ? true
-                : false;
+        responseData["IsRecord"].toString().toLowerCase() == "true"
+            ? true
+            : false;
 
         return saveData;
       } else {
@@ -2809,19 +2794,19 @@ class Services {
       Response response = await dio.get(url);
       if (response.statusCode == 200) {
         SaveDataClass saveData =
-            new SaveDataClass(Message: 'No Data', IsSuccess: false, Data: '0');
+        new SaveDataClass(Message: 'No Data', IsSuccess: false, Data: '0');
 
         var responseData = jsonDecode(response.data);
         print("SaveInsertPopertysale Response: " + responseData.toString());
         saveData.Message = responseData["MESSAGE"].toString();
         saveData.IsSuccess =
-            responseData["IsSuccess"].toString().toLowerCase() == "true"
-                ? true
-                : false;
+        responseData["IsSuccess"].toString().toLowerCase() == "true"
+            ? true
+            : false;
         saveData.IsRecord =
-            responseData["IsRecord"].toString().toLowerCase() == "true"
-                ? true
-                : false;
+        responseData["IsRecord"].toString().toLowerCase() == "true"
+            ? true
+            : false;
 
         return saveData;
       } else {
@@ -2835,19 +2820,19 @@ class Services {
   }
 
   static Future<SaveDataClass> UpdatePropertySale(
-    dropdownType,
-    dropdownPtype,
-    edtAddressController,
-    edtLocationController,
-    edtCarpetAreaController,
-    dropdownCarpetArea,
-    edtPriceController,
-    dropdownPriority,
-    edtGoogleMapController,
-    dropdownsalerent,
-    edtAdditionalDesController,
-    propertyId,
-  ) async {
+      dropdownType,
+      dropdownPtype,
+      edtAddressController,
+      edtLocationController,
+      edtCarpetAreaController,
+      dropdownCarpetArea,
+      edtPriceController,
+      dropdownPriority,
+      edtGoogleMapController,
+      dropdownsalerent,
+      edtAdditionalDesController,
+      propertyId,
+      ) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String MemberId = prefs.get(cnst.Session.MemberId);
     String ChapterId = prefs.get(cnst.Session.ChapterId);
@@ -2859,19 +2844,19 @@ class Services {
       Response response = await dio.get(url);
       if (response.statusCode == 200) {
         SaveDataClass saveData =
-            new SaveDataClass(Message: 'No Data', IsSuccess: false, Data: '0');
+        new SaveDataClass(Message: 'No Data', IsSuccess: false, Data: '0');
 
         var responseData = jsonDecode(response.data);
         print("UpdateProperty Response: " + responseData.toString());
         saveData.Message = responseData["MESSAGE"].toString();
         saveData.IsSuccess =
-            responseData["IsSuccess"].toString().toLowerCase() == "true"
-                ? true
-                : false;
+        responseData["IsSuccess"].toString().toLowerCase() == "true"
+            ? true
+            : false;
         saveData.IsRecord =
-            responseData["IsRecord"].toString().toLowerCase() == "true"
-                ? true
-                : false;
+        responseData["IsRecord"].toString().toLowerCase() == "true"
+            ? true
+            : false;
 
         return saveData;
       } else {
@@ -2906,19 +2891,19 @@ class Services {
       Response response = await dio.get(url);
       if (response.statusCode == 200) {
         SaveDataClass saveData =
-            new SaveDataClass(Message: 'No Data', IsSuccess: false, Data: '0');
+        new SaveDataClass(Message: 'No Data', IsSuccess: false, Data: '0');
 
         var responseData = jsonDecode(response.data);
         print("SaveInsertPopertyRent Response: " + responseData.toString());
         saveData.Message = responseData["MESSAGE"].toString();
         saveData.IsSuccess =
-            responseData["IsSuccess"].toString().toLowerCase() == "true"
-                ? true
-                : false;
+        responseData["IsSuccess"].toString().toLowerCase() == "true"
+            ? true
+            : false;
         saveData.IsRecord =
-            responseData["IsRecord"].toString().toLowerCase() == "true"
-                ? true
-                : false;
+        responseData["IsRecord"].toString().toLowerCase() == "true"
+            ? true
+            : false;
 
         return saveData;
       } else {
@@ -3055,14 +3040,14 @@ class Services {
       final response = await dio.get(url);
       if (response.statusCode == 200) {
         SaveDataClass saveData =
-            new SaveDataClass(Message: 'No Data', IsSuccess: false, Data: '0');
+        new SaveDataClass(Message: 'No Data', IsSuccess: false, Data: '0');
         var responseData = jsonDecode(response.data);
 
         print("OTPVerify Response: " + responseData.toString());
 
         saveData.Message = responseData["Message"];
         saveData.IsSuccess =
-            responseData["IsSuccess"].toString() == "true" ? true : false;
+        responseData["IsSuccess"].toString() == "true" ? true : false;
         saveData.Data = responseData["Data"];
 
         return saveData;

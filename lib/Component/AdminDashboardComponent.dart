@@ -29,7 +29,7 @@ class _AdminDashboardComponentState extends State<AdminDashboardComponent> {
           children: [
 //==============Dashboard Search Component
             Container(
-              height: MediaQuery.of(context).size.height * 0.17,
+              height: MediaQuery.of(context).size.height * 0.18,
               width: MediaQuery.of(context).size.width,
               child: Column(
                 children: [

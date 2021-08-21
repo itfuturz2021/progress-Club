@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:convert';
+import 'package:getwidget/getwidget.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -768,6 +769,15 @@ class _MemberProfileState extends State<MemberProfile> {
       });
     }
   }
+  String dropdownvalue = 'Leader1';
+  var lead =  ['Leader1','M1','M2','M3','M4','M5','M6','M7','M8'];
+  String ddv ='Leader2';
+  var leader =['Leader2','m1','m2','m3'];
+  String dropdown ='Director';
+  var dir=['Director','d1','d2','d3'];
+  String drop ='ChainLeader';
+  var chain=['ChainLeader','c1','c2','c3','M1','M2','M3','M4','M5','M6','M7','M8'];
+
 
   @override
   Widget build(BuildContext context) {
@@ -780,7 +790,7 @@ class _MemberProfileState extends State<MemberProfile> {
         buttonColor: Colors.deepPurple,
       ),
       home: DefaultTabController(
-        length: 3,
+        length:4,
         child: Scaffold(
           appBar: AppBar(
             automaticallyImplyLeading: true,
@@ -797,6 +807,9 @@ class _MemberProfileState extends State<MemberProfile> {
                 ),
                 Tab(
                   child: Text('More Info'),
+                ),
+                Tab(
+                  child: Text('Progress Club'),
                 ),
                 /*Tab(
                   child: Text('Attendance'),
@@ -2496,6 +2509,127 @@ class _MemberProfileState extends State<MemberProfile> {
                             ),
                           )
                         : NoDataComponent(),
+              ),
+              Container(
+                child: Padding(
+                  padding: EdgeInsets.only(top: 8),
+                  child: Column(
+                    children: [
+                      Card (
+                        color: Colors.grey[200],
+                        child: Container(
+                          width:MediaQuery.of(context).size.width,
+                          margin: EdgeInsets.all(12),
+                          child:  DropdownButtonHideUnderline(
+                            child:  DropdownButton(
+                              value: dropdownvalue,
+                              icon: Padding(
+                                padding: const EdgeInsets.only(left: 240),
+                                child: Icon(Icons.keyboard_arrow_down),
+                              ),
+                              items:lead.map((String lead) {
+                                return DropdownMenuItem(
+                                    value: lead,
+                                    child: Text(lead)
+                                );
+                              }
+                              ).toList(),
+                              onChanged: (String newValue){
+                                setState(() {
+                                  dropdownvalue = newValue;
+                                });
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+                      Card(
+                        color: Colors.grey[200],
+                        child: Container(
+                          width:MediaQuery.of(context).size.width,
+                          margin: EdgeInsets.all(12),
+                          child:  DropdownButtonHideUnderline(
+                            child: DropdownButton(
+                              value: ddv,
+                              icon: Padding(
+                                padding: const EdgeInsets.only(left: 235),
+                                child: Icon(Icons.keyboard_arrow_down),
+                              ),
+                              items:leader.map((String leader) {
+                                return DropdownMenuItem(
+                                    value: leader,
+                                    child: Text(leader)
+                                );
+                              }
+                              ).toList(),
+                              onChanged: (String newValue){
+                                setState(() {
+                                  ddv = newValue;
+                                });
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+                      Card(
+                        color: Colors.grey[200],
+                        child: Container(
+                          width:MediaQuery.of(context).size.width,
+                          margin: EdgeInsets.all(12),
+                          child:  DropdownButtonHideUnderline(
+                            child: DropdownButton(
+                              value: dropdown,
+                              icon: Padding(
+                                padding: const EdgeInsets.only(left: 232),
+                                child: Icon(Icons.keyboard_arrow_down),
+                              ),
+                              items:dir.map((String dir) {
+                                return DropdownMenuItem(
+                                    value: dir,
+                                    child: Text(dir)
+                                );
+                              }
+                              ).toList(),
+                              onChanged: (String newValue){
+                                setState(() {
+                                  dropdown = newValue;
+                                });
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+                      Card(
+                        color: Colors.grey[200],
+                        child: Container(
+                          width:MediaQuery.of(context).size.width,
+                          margin: EdgeInsets.all(12),
+                          child:  DropdownButtonHideUnderline(
+                            child:DropdownButton(
+                              value: drop,
+                              icon: Padding(
+                                padding: const EdgeInsets.only(left: 195),
+                                child: Icon(Icons.keyboard_arrow_down),
+                              ),
+                              items:chain.map((String chain) {
+                                return DropdownMenuItem(
+                                    value: chain,
+                                    child: Text(chain)
+                                );
+                              }
+                              ).toList(),
+                              onChanged: (String newValue){
+                                setState(() {
+                                  drop = newValue;
+                                });
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
               ),
               /*Container(
                 height: MediaQuery.of(context).size.height,

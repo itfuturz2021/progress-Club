@@ -85,22 +85,22 @@ class _MyAppState extends State<MyApp> {
   Future<Null> _showItemDialog(Map<String, dynamic> message) async {
     //final Item item = _itemForMessage(message);
     showDialog<Null>(
-            builder: (context) => new AlertDialog(
-                  content: new Text("Item ${message} has been updated"),
-                  actions: <Widget>[
-                    new FlatButton(
-                        child: const Text('CLOSE'),
-                        onPressed: () {
-                          Navigator.pop(context, false);
-                        }),
-                    new FlatButton(
-                        child: const Text('SHOW'),
-                        onPressed: () {
-                          Navigator.pop(context, true);
-                        }),
-                  ],
-                ),
-            context: context)
+        builder: (context) => new AlertDialog(
+          content: new Text("Item ${message} has been updated"),
+          actions: <Widget>[
+            new FlatButton(
+                child: const Text('CLOSE'),
+                onPressed: () {
+                  Navigator.pop(context, false);
+                }),
+            new FlatButton(
+                child: const Text('SHOW'),
+                onPressed: () {
+                  Navigator.pop(context, true);
+                }),
+          ],
+        ),
+        context: context)
         .then((bool shouldNavigate) {
       if (shouldNavigate == true) {
         //_navigateToItemDetail(message);
