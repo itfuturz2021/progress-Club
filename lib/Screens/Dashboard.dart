@@ -39,6 +39,7 @@ bool adminOptionsPressed = false;
 bool isAdmin = true;
 bool isLoading = true;
 const String memberType = "";
+
 class Dashboard extends StatefulWidget {
   @override
   _DashboardState createState() => _DashboardState();
@@ -1234,7 +1235,7 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
                             title: new Text("Member Directory"),
                             onTap: () {
                               Navigator.pop(context);
-                              Navigator.pushNamed(context, '/Directory');
+                              Navigator.pushNamed(context, '/ Directory');
                             }),
                         Divider(
                           height: 2,
@@ -1427,7 +1428,7 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
                             }
                           },
                         ),*/
-                       /* Divider(
+                        /* Divider(
                           height: 2,
                           color: Colors.black,
                         ),
@@ -1462,7 +1463,7 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
                             //Navigator.pushReplacementNamed(context, '/Download');
                           },
                         ),
-                       /* Divider(
+                        /* Divider(
                           height: 2,
                           color: Colors.black,
                         ),
@@ -1534,7 +1535,7 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
                             Navigator.pushNamed(context, '/Visitorlist');
                           },
                         ),
-                       /* Divider(
+                        /* Divider(
                           height: 2,
                           color: Colors.black,
                         ),
@@ -1747,6 +1748,7 @@ class _WidgetFlipperState extends State<WidgetFlipper>
       memberId = "",
       memberType = "",
       chapterId = "";
+
   getLocalData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
@@ -1760,13 +1762,12 @@ class _WidgetFlipperState extends State<WidgetFlipper>
     });
   }
 
-
   @override
   void initState() {
     getLocalData();
     super.initState();
     print("heloooooooooooooooooooooooooooooooooooooooooooooooooo");
-print(memberType);
+    print(memberType);
     controller =
         AnimationController(duration: Duration(milliseconds: 400), vsync: this);
     _frontRotation = TweenSequence(
@@ -1802,6 +1803,7 @@ print(memberType);
     controller.dispose();
     super.dispose();
   }
+
   _dismissKeyboard(BuildContext context) {
     FocusScope.of(context).requestFocus(new FocusNode());
   }
@@ -1822,85 +1824,88 @@ print(memberType);
         _tapDetectionControls(),
       ],
     );
-
   }
 
-
   Widget _tapDetectionControls() {
-    return  memberType.toLowerCase() == "null"  ?  Stack(
-      fit: StackFit.expand,
-      children: <Widget>[
-        !isLoading
-            ? isAdmin == true
-                ? adminSwitchShow
-                    ? Column(
-                        children: [
-                          adminOptionsPressed == true
-                              ? SizedBox(
-                                  height: MediaQuery.of(context).size.height *
-                                      0.263,
-                                )
-                              : SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.15,
-                                ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  this._dismissKeyboard(context);
-                                  setState(() {
-                                    adminOptionsPressed = !adminOptionsPressed;
-
-                                  });
-                                  _leftRotation();
-                                },
-                                child: Container(
-                                  height: MediaQuery.of(context).size.height *
-                                      0.062,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.125,
-                                  decoration: BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(25)),
-                                    border: Border.all(
-                                      color: cnst.appPrimaryMaterialColor,
+    return memberType.toLowerCase() == "null"
+        ? Stack(
+            fit: StackFit.expand,
+            children: <Widget>[
+              !isLoading
+                  ? isAdmin == true
+                      ? adminSwitchShow
+                          ? Column(
+                              children: [
+                                adminOptionsPressed == true
+                                    ? SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.263,
+                                      )
+                                    : SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.15,
+                                      ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        this._dismissKeyboard(context);
+                                        setState(() {
+                                          adminOptionsPressed =
+                                              !adminOptionsPressed;
+                                        });
+                                        _leftRotation();
+                                      },
+                                      child: Container(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.062,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.125,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(25)),
+                                          border: Border.all(
+                                            color: cnst.appPrimaryMaterialColor,
+                                          ),
+                                          color: cnst.appPrimaryMaterialColor,
+                                        ),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            Text(
+                                              adminOptionsPressed == false
+                                                  ? 'Admin\nControls'
+                                                  : 'Dash\nControls',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  fontSize: 8.6,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Colors.white),
+                                            ),
+                                            Icon(
+                                              Icons.swap_horiz_rounded,
+                                              color: Colors.white,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                                     ),
-                                    color: cnst.appPrimaryMaterialColor,
-                                  ),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Text(
-                                        adminOptionsPressed == false
-                                            ? 'Admin\nControls'
-                                            : 'Dash\nControls',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            fontSize: 8.6,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.white),
-                                      ),
-                                      Icon(
-                                        Icons.swap_horiz_rounded,
-                                        color: Colors.white,
-                                      ),
-                                    ],
-                                  ),
+                                  ],
                                 ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      )
-                    : Container()
-                : Container()
-            : Container(),
-      ],
-    )
-        :Container();
-
+                              ],
+                            )
+                          : Container()
+                      : Container()
+                  : Container(),
+            ],
+          )
+        : Container();
   }
 
   void _leftRotation() {
@@ -1951,7 +1956,9 @@ class MyDialog extends StatefulWidget {
   _MyDialogState createState() => new _MyDialogState();
 }
 
-class _MyDialogState extends State<MyDialog> {
+class _MyDialogState extends State<MyDialog>
+    with SingleTickerProviderStateMixin {
+  TabController _controller;
   TextEditingController edtSale = new TextEditingController();
   TextEditingController edtEffectiness = new TextEditingController();
   int selectedRadio = 1;
@@ -1985,6 +1992,9 @@ class _MyDialogState extends State<MyDialog> {
             color: Colors.black, fontSize: 17.0, fontWeight: FontWeight.w600));
 
     // TODO: implement initState
+    _controller = TabController(length: 3, vsync: this);
+    _controller.addListener(_handleTab);
+    _controller.animateTo(_controller.index);
     super.initState();
   }
 
@@ -2049,28 +2059,39 @@ class _MyDialogState extends State<MyDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 3,
-      child: Scaffold(
-        appBar: AppBar(
-          bottom: TabBar(
-            tabs: [
-              Tab(text: "Daily Report"),
-              Tab(text: "Report",),
-              Tab(text: "Chain Report",),
-            ],
-          ),
-        ),
-        body: TabBarView(
-          children: [
-            DailyReport(),
-            Report(),
-            ChainReport(),
+    return Scaffold(
+      appBar: AppBar(title: Text('Daily Report    '),
+        bottom: TabBar(
+          labelPadding: EdgeInsets.symmetric(horizontal: 5),
+          labelColor: Colors.white,
+          unselectedLabelColor: Colors.white60,
+          indicatorColor: Colors.white,
+          controller: _controller,
+          tabs: [
+            Tab(text: "Daily Report"),
+            Tab(text: "Report"),
+            Tab(text: "Chain Report",),
           ],
         ),
       ),
+      body: TabBarView(
+        controller: _controller,
+        children: [
+          DailyReport(),
+          Report(),
+          ChainReport(
+            onsucc: () {
+              setState(() {
+                _controller.index = 1;
+              });
+            },
+          ),
+        ],
+      ),
     );
   }
+
+  void _handleTab() {
+    setState(() {});
+  }
 }
-
-

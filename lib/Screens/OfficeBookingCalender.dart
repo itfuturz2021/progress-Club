@@ -36,7 +36,7 @@ class _OfficeBookingCalenderState extends State<OfficeBookingCalender>
   var currentMoth = "", curentYear = "";
 
   TextEditingController _MobileNumberInput = TextEditingController();
-
+  CalendarController _tableController = CalendarController();
   static var now = new DateTime.now();
   var date = new DateFormat("yyyy-MM-dd").format(now);
 
@@ -298,7 +298,8 @@ class _OfficeBookingCalenderState extends State<OfficeBookingCalender>
         ),
       ),
       onVisibleDaysChanged: _onVisibleDaysChanged,
-      // onDaySelected: _onDaySelected,
+       onDaySelected: _onDaySelected,
+      calendarController: _tableController,
     );
   }
 
@@ -308,7 +309,7 @@ class _OfficeBookingCalenderState extends State<OfficeBookingCalender>
     });
   }
 
-  void _onDaySelected(DateTime day, List events) {
+  void _onDaySelected(DateTime day, List events,List formality) {
     setState(() {
       _selectedDay = day;
       _selectedEvents = events;

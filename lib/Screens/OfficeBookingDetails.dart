@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:typed_data';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -134,31 +133,31 @@ class _OfficeBookingDetailsState extends State<OfficeBookingDetails> {
             children: <Widget>[
               isLoading
                   ? Container(
-                      height: MediaQuery.of(context).size.height / 1.25,
-                      width: MediaQuery.of(context).size.width,
-                      child: LoadinComponent(),
-                    )
+                height: MediaQuery.of(context).size.height / 1.25,
+                width: MediaQuery.of(context).size.width,
+                child: LoadinComponent(),
+              )
                   : listMeeting.length > 0
-                      ? Container(
-                          height: MediaQuery.of(context).size.height / 1.25,
-                          margin: EdgeInsets.only(top: 10),
-                          width: MediaQuery.of(context).size.width,
-                          child: ListView.builder(
-                            padding: EdgeInsets.all(0),
-                            itemCount: listMeeting.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return OfficeBookingDetailComponent(
-                                  listMeeting[index],
-                                  widget.memberId,
-                                  "Meeting");
-                            },
-                          ),
-                        )
-                      : Container(
-                          height: MediaQuery.of(context).size.height / 1.25,
-                          width: MediaQuery.of(context).size.width,
-                          child: NoDataComponent(),
-                        ),
+                  ? Container(
+                height: MediaQuery.of(context).size.height / 1.25,
+                margin: EdgeInsets.only(top: 10),
+                width: MediaQuery.of(context).size.width,
+                child: ListView.builder(
+                  padding: EdgeInsets.all(0),
+                  itemCount: listMeeting.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return OfficeBookingDetailComponent(
+                        listMeeting[index],
+                        widget.memberId,
+                        "Meeting");
+                  },
+                ),
+              )
+                  : Container(
+                height: MediaQuery.of(context).size.height / 1.25,
+                width: MediaQuery.of(context).size.width,
+                child: NoDataComponent(),
+              ),
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(
@@ -197,7 +196,7 @@ class _OfficeBookingDetailsState extends State<OfficeBookingDetails> {
       builder: (BuildContext context) => BottomSheet(
         listMeeting,
         widget.date,
-        (action) {
+            (action) {
           /*setState(() {
             method = action;
           });*/
@@ -287,7 +286,7 @@ class _BottomSheetState extends State<BottomSheet> {
           'Purpose': edtDesc.text.toString().trim(),
           'Date': widget.date,
         };
-        Services.sendRequestBooking(data).then((data) async {
+        Services.sendRequestBooking(memberId,_Fromtime.toString(),_Totime.toString(),edtDesc.text.toString().trim(),widget.date).then((data) async {
           pr.hide();
           if (data.Data != "0" && data != "") {
             Navigator.pop(context);
@@ -386,17 +385,17 @@ class _BottomSheetState extends State<BottomSheet> {
                                       containerHeight: 250.0,
                                     ),
                                     showTitleActions: true, onConfirm: (time) {
-                                  //print('confirm $time');
-                                  setState(() {
-                                    FromDate = DateFormat("HH:mm").parse(
-                                        '${time.hour}:${time.minute}'); // think this will work better for you
-                                    _Fromtime = DateFormat("hh:mm a")
-                                        .format(FromDate)
-                                        .toString();
-                                    // print(
-                                    //  DateFormat("hh:mm a").format(FromDate));
-                                  });
-                                },
+                                      //print('confirm $time');
+                                      setState(() {
+                                        FromDate = DateFormat("HH:mm").parse(
+                                            '${time.hour}:${time.minute}'); // think this will work better for you
+                                        _Fromtime = DateFormat("hh:mm a")
+                                            .format(FromDate)
+                                            .toString();
+                                        // print(
+                                        //  DateFormat("hh:mm a").format(FromDate));
+                                      });
+                                    },
                                     currentTime: DateTime.now(),
                                     locale: LocaleType.en);
                                 setState(() {});
@@ -407,16 +406,16 @@ class _BottomSheetState extends State<BottomSheet> {
                                     shape: BoxShape.rectangle,
                                     border: Border.all(color: Colors.black),
                                     borderRadius:
-                                        BorderRadius.all(Radius.circular(10))),
+                                    BorderRadius.all(Radius.circular(10))),
                                 child: Center(
                                     child: Text(
-                                  "${_Fromtime}",
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      color: _Fromtime == "From Time"
-                                          ? Colors.grey
-                                          : Colors.black),
-                                )),
+                                      "${_Fromtime}",
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          color: _Fromtime == "From Time"
+                                              ? Colors.grey
+                                              : Colors.black),
+                                    )),
                               ),
                             ),
                           )
@@ -440,29 +439,29 @@ class _BottomSheetState extends State<BottomSheet> {
                                       ),
                                       showTitleActions: true,
                                       onConfirm: (time) {
-                                    // print('confirm $time');
-                                    ToDate = DateFormat("HH:mm").parse(
-                                        '${time.hour}:${time.minute}'); // think this will work better for you
-                                    if (FromDate.isBefore(ToDate)) {
-                                      setState(() {
-                                        _Totime = DateFormat("hh:mm a")
-                                            .format(ToDate)
-                                            .toString();
-                                        //  print(DateFormat("hh:mm a")
-                                        //   .format(ToDate));
-                                      });
-                                    } else {
-                                      setState(() {
-                                        _Totime = "To Time";
-                                      });
-                                      Fluttertoast.showToast(
-                                          msg: "Please Select Valid Time",
-                                          backgroundColor: Colors.red,
-                                          textColor: Colors.white,
-                                          gravity: ToastGravity.TOP,
-                                          toastLength: Toast.LENGTH_SHORT);
-                                    }
-                                  },
+                                        // print('confirm $time');
+                                        ToDate = DateFormat("HH:mm").parse(
+                                            '${time.hour}:${time.minute}'); // think this will work better for you
+                                        if (FromDate.isBefore(ToDate)) {
+                                          setState(() {
+                                            _Totime = DateFormat("hh:mm a")
+                                                .format(ToDate)
+                                                .toString();
+                                            //  print(DateFormat("hh:mm a")
+                                            //   .format(ToDate));
+                                          });
+                                        } else {
+                                          setState(() {
+                                            _Totime = "To Time";
+                                          });
+                                          Fluttertoast.showToast(
+                                              msg: "Please Select Valid Time",
+                                              backgroundColor: Colors.red,
+                                              textColor: Colors.white,
+                                              gravity: ToastGravity.TOP,
+                                              toastLength: Toast.LENGTH_SHORT);
+                                        }
+                                      },
                                       currentTime: DateTime.now(),
                                       locale: LocaleType.en);
                                   setState(() {});
@@ -481,7 +480,7 @@ class _BottomSheetState extends State<BottomSheet> {
                                   shape: BoxShape.rectangle,
                                   border: Border.all(color: Colors.black),
                                   borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
+                                  BorderRadius.all(Radius.circular(10)),
                                 ),
                                 child: Center(
                                   child: Text(
@@ -635,11 +634,11 @@ class _OfficeBookingRulesState extends State<OfficeBookingRules> {
       ),
       body: Center(
           child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        // child: PDFView(
-        //   filePath: widget.path,
-        // ),
-      )),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            // child: PDFView(
+            //   filePath: widget.path,
+            // ),
+          )),
     );
   }
 }

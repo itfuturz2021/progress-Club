@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:progressclubsurat_new/Common/Constants.dart' as cnst;
 import 'package:progressclubsurat_new/Common/Constants.dart';
 import 'package:progressclubsurat_new/Screens/MemberDirectory.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class DirectoryComponents extends StatefulWidget {
   var directory;
@@ -13,6 +16,8 @@ class DirectoryComponents extends StatefulWidget {
 }
 
 class _DirectoryComponentsState extends State<DirectoryComponents> {
+
+
 
   saveChapterId() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -33,7 +38,30 @@ class _DirectoryComponentsState extends State<DirectoryComponents> {
     await prefs.setString(Session.CommitieId,widget.directory["ChapterId"].toString());
     Navigator.pushNamed(context, '/CommitieScreen');
   }
+  PermissionStatus _permissionStatus = PermissionStatus.unknown;
+  Future<void> requestPermission(PermissionGroup permission) async {
+    final List<PermissionGroup> permissions = <PermissionGroup>[permission];
+    final Map<PermissionGroup, PermissionStatus> permissionRequestResult =
+    await PermissionHandler().requestPermissions(permissions);
 
+    setState(() {
+      print(permissionRequestResult);
+      _permissionStatus = permissionRequestResult[permission];
+      print(_permissionStatus);
+    });
+    if (permissionRequestResult[permission] == PermissionStatus.granted) {
+    } else
+      Fluttertoast.showToast(
+          msg: "Permission Not Granted",
+          gravity: ToastGravity.TOP,
+          toastLength: Toast.LENGTH_SHORT);
+  }
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    requestPermission(PermissionGroup.contacts);
+  }
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

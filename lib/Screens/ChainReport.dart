@@ -9,11 +9,15 @@ import 'package:progressclubsurat_new/Common/Constants.dart';
 import 'package:progressclubsurat_new/Common/Services.dart';
 import 'package:progressclubsurat_new/Component/LoadinComponent.dart';
 import 'package:progressclubsurat_new/Component/NoDataComponent.dart';
+import 'package:progressclubsurat_new/Screens/Dashboard.dart';
 import 'package:progressclubsurat_new/Screens/Report.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ChainReport extends StatefulWidget {
+  Function onsucc;
+
+  ChainReport({this.onsucc});
   @override
   _ChainReportState createState() => _ChainReportState();
 }
@@ -22,6 +26,9 @@ class _ChainReportState extends State<ChainReport> {
   List<eventClass> _eventList = [];
   List<eventClass> _allowedEventList = [];
   eventClass _eventClass;
+
+
+  bool vikalp;
 
   bool isLoading = false, isSearching = false;
   List _allVisitorList = new List();
@@ -34,8 +41,10 @@ class _ChainReportState extends State<ChainReport> {
 
   @override
   void initState() {
+    TabController _controller;
     getEventData();
     getVisitorData("0");
+
     pr = new ProgressDialog(context, type: ProgressDialogType.Normal);
     pr.style(
         message: "Please Wait",
@@ -50,6 +59,17 @@ class _ChainReportState extends State<ChainReport> {
         insetAnimCurve: Curves.easeInOut,
         messageTextStyle: TextStyle(
             color: Colors.black, fontSize: 17.0, fontWeight: FontWeight.w600));
+    PageController _pageController = PageController(
+      initialPage: 0,
+    );
+
+    goToPage(num page) {
+      _pageController.animateToPage(
+        page,
+        duration: Duration(milliseconds: 350),
+        curve: Curves.easeIn,
+      );
+    }
   }
 
   getLocalData() async {
@@ -481,6 +501,7 @@ class _ChainReportState extends State<ChainReport> {
                                         index);
                                   }
                                 }),
+
                             Platform.isIOS
                                 ? Container()
                                 : Padding(
@@ -515,39 +536,7 @@ class _ChainReportState extends State<ChainReport> {
                               padding:
                               const EdgeInsets.only(
                                   right: 5.0),
-                              child: GestureDetector(
-                                  onTap: () {
-                                    _searchList[index][
-                                    "status"]
-                                        .toString()
-                                        .toLowerCase() !=
-                                        "registered"
-                                        ? _showConfirmDialog(
-                                        _searchList[
-                                        index]
-                                        [
-                                        "Id"]
-                                            .toString())
-                                        : Fluttertoast.showToast(
-                                        msg:
-                                        "Registered Member Can't Delete",
-                                        backgroundColor:
-                                        Colors
-                                            .red,
-                                        textColor:
-                                        Colors
-                                            .white,
-                                        gravity:
-                                        ToastGravity
-                                            .BOTTOM,
-                                        toastLength:
-                                        Toast
-                                            .LENGTH_SHORT);
-                                  },
-                                  child: Icon(
-                                      Icons.delete,
-                                      color: Colors
-                                          .red[400])),
+
                             ),
                           ],
                         ),
@@ -667,6 +656,24 @@ class _ChainReportState extends State<ChainReport> {
                                 ),
                               ),
                             ),
+                            IconButton(
+                                icon: Icon(
+                                  Icons.call,
+                                  color: Colors.green[700],
+                                ),
+                                onPressed: () {
+                                  launch("tel:" +
+                                      _allVisitorList[index]
+                                      ['MobileNo']);
+                                  if (_allVisitorList[index]
+                                  ["status"]
+                                      .toString()
+                                      .toLowerCase() ==
+                                      "pending") {
+                                    _addVisitorToEvent(
+                                        index);
+                                  }
+                                }),
                             IconButton(
                                 icon: Icon(
                                   Icons.call,
@@ -856,6 +863,18 @@ class _ChainReportState extends State<ChainReport> {
                                         index][
                                         'MobileNo']);
                                   }),
+                              IconButton(
+                                  icon: Icon(
+                                    Icons.call,
+                                    color: Colors
+                                        .green[700],
+                                  ),
+                                  onPressed: () {
+                                    launch("tel:" +
+                                        _searchList[
+                                        index][
+                                        'MobileNo']);
+                                  }),
                             ],
                           ),
 
@@ -871,101 +890,112 @@ class _ChainReportState extends State<ChainReport> {
                 itemCount: _allVisitorList.length,
                 itemBuilder:
                     (BuildContext context, int index) {
-                  return Card(
-                    elevation: 2,
-                    child: Column(
-                      children: <Widget>[
-                        Row(
-                          children: <Widget>[
-                            Padding(
-                              padding:
-                              const EdgeInsets.only(
-                                  top: 10.0,
-                                  left: 10.0,
-                                  bottom: 1.0),
-                              child: Container(
-                                width: 46,
-                                height: 46,
-                                decoration: BoxDecoration(
-                                  image: new DecorationImage(
-                                      image: AssetImage(
-                                          "images/icon_user.png"),
-                                      fit: BoxFit.cover),
-                                  borderRadius: BorderRadius
-                                      .all(new Radius
-                                      .circular(75.0)),
+                  return GestureDetector(
+                    onTap: () {
+                    setState(() {
+                  widget.onsucc();
+                    });
+                      _allVisitorList[index];
+                     /* Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MyDialog(initialIndex: 1)),
+                      );*/
+                    },
+                    child: Card(
+                      elevation: 2,
+                        color: vikalp == false
+                            ?Colors.greenAccent
+                            :Colors.red,
+                        child: Column(
+                        children: <Widget>[
+
+                          Row(
+                            children: <Widget>[
+                              Padding(
+                                padding:
+                                const EdgeInsets.only(
+                                    top: 10.0,
+                                    left: 10.0,
+                                    bottom: 1.0),
+                                child: Padding(
+                                  padding: EdgeInsets.only(bottom: 5),
+                                  child: Container(
+                                    width: 46,
+                                    height: 46,
+                                    decoration: BoxDecoration(
+                                      image: new DecorationImage(
+                                          image: AssetImage(
+                                              "images/icon_user.png"),
+                                          fit: BoxFit.cover),
+                                      borderRadius: BorderRadius
+                                          .all(new Radius
+                                          .circular(75.0)),
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                            Expanded(
-                              child: Padding(
-                                padding: EdgeInsets.only(
-                                    left: 6,
-                                    top: 5,
-                                    bottom: 5),
-                                child: Column(
-                                  crossAxisAlignment:
-                                  CrossAxisAlignment
-                                      .start,
-                                  children: <Widget>[
-                                    Row(
-                                      children: <Widget>[
-                                        Text(
-                                          "${_allVisitorList[index]["Name"]}",
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight:
-                                            FontWeight
-                                                .w600,
-                                            color: Color
-                                                .fromRGBO(
-                                              81,
-                                              92,
-                                              111,
-                                              1,
+                              Expanded(
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 6,
+                                      top: 5,
+                                      bottom: 5),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment
+                                        .start,
+                                    children: <Widget>[
+                                      Row(
+                                        children: <Widget>[
+                                          Text(
+                                            "${_allVisitorList[index]["Name"]}",
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight:  FontWeight.w600,
+                                              color:vikalp==false ? Color.fromRGBO(81,92,111,1)
+                                                        :Colors.white
                                             ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: <Widget>[
-                                        Text(
-                                          "${_allVisitorList[index]["MobileNo"]}",
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight:
-                                            FontWeight
-                                                .w500,
-                                            color: Colors
-                                                .grey[700],
+                                        ],
+                                      ),
+                                      Row(
+                                        children: <Widget>[
+                                          Text(
+                                            "${_allVisitorList[index]["MobileNo"]}",
+                                            style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight:
+                                              FontWeight
+                                                  .w500,
+                                              color: vikalp==false
+
+                                                  ? Colors
+                                                  .grey[700]
+                                                  :Colors.white,
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                            IconButton(
-                              icon: Icon(
-                                Icons.call,
-                                color: Colors.green[700],
-                              ),
-                              onPressed: () {
-                                launch("tel:" +
-                                    _allVisitorList[index]
-                                    ['MobileNo']);
-                              },
-                            ),
-                           IconButton(icon: Icon(Icons.person,),
-                               onPressed: (){
-                                 Report();
-                                }
+                              IconButton(
+                                icon: Icon(
+                                  Icons.call,
+                                  color: Colors.green[700],
                                 ),
-                          ],
-                        ),
-                      ],
+                                onPressed: () {
+                                  launch("tel:" +
+                                      _allVisitorList[index]
+                                      ['MobileNo']);
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 },
@@ -999,5 +1029,16 @@ class _ChainReportState extends State<ChainReport> {
         isSearching = false;
       });
     setState(() {});
+  }
+  PageController _pageController = PageController(
+    initialPage: 0,
+  );
+
+  goToPage(num page) {
+    _pageController.animateToPage(
+      page,
+      duration: Duration(milliseconds: 350),
+      curve: Curves.easeIn,
+    );
   }
 }

@@ -160,18 +160,29 @@ class _MemberDirectoryState extends State<MemberDirectory> {
     pr.show();
     for (int i = 0; i < list.length; i++) {
       var chap = widget.chapterName.toString().split(" ");
+      print("chap.............$chap");
       String prefix = "";
       try {
         int digit=1;
         String name="";
         if(chap[2].length==2){
+          print("11111111111111111111111111111111111111111");
           setState(() {
             digit=2;
           });
+        } else {
+          setState(() {
+            digit = 1;
+          });
         }
         if(chap.length>=4){
+         // print("222222222222222222222222222222222222222222");
           setState(() {
-            name= chap[2].substring(0, 2);
+            if(chap[3].length==2) {
+              name = chap[3].substring(0, 2);
+            } else {
+              name = chap[3].substring(0, 1);
+            }
           });
         }
 
@@ -180,9 +191,11 @@ class _MemberDirectoryState extends State<MemberDirectory> {
             chap[2].substring(0, digit) +
             name.toString() +
             " ";
+        print("prefix..................$prefix");
       } catch (e) {
         prefix = "PC ";
       }
+      print("prefix..................$prefix");
           Contact contact = Contact();
           contact.givenName = prefix + list[i]["Name"];
           contact.phones = [Item(label: "mobile", value: list[i]["MobileNo"])];
@@ -199,6 +212,9 @@ class _MemberDirectoryState extends State<MemberDirectory> {
         toastLength: Toast.LENGTH_LONG);
     pr.hide();
   }
+
+
+
   refreshContacts() async {
     var contacts = await ContactService.getContacts(
         withThumbnails: false, photoHighResolution: false);
